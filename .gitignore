@@ -1,0 +1,22 @@
+# Python 后端
+backend/.venv/
+__pycache__/
+*.pyc
+
+# 数据与隐私（不进仓库）
+backend/data/*.db
+backend/data/uploads/
+backend/*.log
+backend/server.log
+backend/tunnel*.log
+backend/monitor.log
+backend/monitor.lock
+
+# 前端构建与依赖
+frontend/node_modules/
+frontend/dist/
+frontend/.uni/
+
+# 工具与临时
+.temp/
+*.log
