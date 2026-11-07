@@ -7,7 +7,13 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 os.makedirs(DATA_DIR, exist_ok=True)
 
 # ---- 安全 ----
-SECRET_KEY = os.environ.get("DRIFT_SECRET_KEY", "drift-bottle-dev-secret-2026")
+# SECRET_KEY 优先读取本地密钥文件 data/.secret（不进 Git 仓库）；其次环境变量；最后开发默认值
+_secret_file = os.path.join(DATA_DIR, ".secret")
+if os.path.exists(_secret_file):
+    with open(_secret_file, "r", encoding="utf-8") as _f:
+        SECRET_KEY = _f.read().strip() or "drift-bottle-dev-secret-2026"
+else:
+    SECRET_KEY = os.environ.get("DRIFT_SECRET_KEY", "drift-bottle-dev-secret-2026")
 TOKEN_EXPIRE_HOURS = 24 * 7          # JWT 有效期 7 天
 PHONE_SALT = "drift-bottle-phone"    # 手机号哈希盐（生产请换为密钥管理服务）
 
